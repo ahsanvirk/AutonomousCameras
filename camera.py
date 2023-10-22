@@ -30,7 +30,7 @@ while(True):
 	data = cv2.CascadeClassifier(r"stopSign.xml")
 	faces = cv2.CascadeClassifier(r"test.xml")
 
-	found = data.detectMultiScale(gray, minSize=(20,20))
+	found = data.detectMultiScale(gray, minSize=(30,30))
 	facesFound = faces.detectMultiScale(gray, minSize=(20,20))
 	amtFound = len(found)
 	amtFaces = len(facesFound)
@@ -38,14 +38,6 @@ while(True):
 	speedSign = cv2.CascadeClassifier(r"speedLimit.xml")
 	foundSign = speedSign.detectMultiScale(gray, minSize=(20,20))
 	foundSignLen = len(foundSign)
-
-	if amtFound != 0:
-		for(x,y,width,height) in found:
-			cv2.rectangle(rgb, (x,y), (x+height, y+width), (0,255,0), 5)
-			__draw_label(frame, 'Stop', (20,20), (0,0,0))
-			cv2.imshow('Frame', frame)
-   			# Display the resulting frame
-			#setCurrentBrakeForce(1.0)
 
 	if amtFaces != 0:
 		for(x,y,width,height) in facesFound:
@@ -55,10 +47,19 @@ while(True):
 		text = pytesseract.image_to_string(gray, lang = 'eng', config = '--psm 6')
 		for i in re.findall(r'\d+', text):
 			if(int(i) > 25 or int(i) % 5 == 0 or int(i) % 10 == 0):
-				if i != 0 and i > 15:
+				if i != 0:
 					print(i)
 		
+	if amtFound != 0:
+		for(x,y,width,height) in found:
+			cv2.rectangle(rgb, (x,y), (x+height, y+width), (0,255,0), 5)
+			__draw_label(frame, 'Stop', (20,20), (0,0,0))
+			cv2.imshow("Frame", frame)
+   			# Display the resulting frame
+			#setCurrentBrakeForce(1.0)	
 	accelSpeed()
+
+	# Infared sensitive camera that deduces flair
 
 		
 	
