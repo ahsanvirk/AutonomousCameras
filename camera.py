@@ -5,7 +5,7 @@ from main import setCurrentBrakeForce, accelSpeed, setMaxSpeed, printCarInfo
 import re
 # define a video capture object 
 vid = cv2.VideoCapture(0) 
-pytesseract.pytesseract.tesseract_cmd = 'C:\\Users\\gak\\Desktop\\tes\\tesseract.exe'
+pytesseract.pytesseract.tesseract_cmd = 'tesseract.exe'
 
 while(True): 
 	ret, frame = vid.read()
